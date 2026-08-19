@@ -1,0 +1,67 @@
+schema_version: 1
+
+id: ""
+title: ""
+status: draft                 # draft | active | stopped | concluded
+route: predictive             # predictive is the core MLH route
+task_type: ""                 # classification | regression | ranking | forecasting
+
+question: ""
+decision_context: ""
+hypothesis: ""
+counter_hypothesis: ""
+kill_criteria: []
+
+scope:
+  population: ""
+  unit_of_observation: ""
+  included: []
+  excluded: []
+
+target:
+  name: ""
+  definition: ""
+  observed_at: ""
+  horizon: ""
+  availability_lag: ""
+
+split:
+  protocol: ""               # iid | grouped | temporal | spatial | custom
+  inner_validation: ""
+  gap_or_embargo: ""
+  train: ""
+  test: ""
+  impact: ""
+  holdout: ""
+
+metrics:
+  primary: ""
+  secondary: []
+  guardrails: []
+  uncertainty_method: ""
+
+baselines:
+  naive: []
+  simple: []
+  incumbent: []
+
+search:
+  allowed_model_families: []
+  max_trials: 0
+  seed_policy: ""
+  selection_rule: ""
+
+impact:
+  required: false
+  method: ""
+  prediction_to_decision_policy: ""
+  constraints: []
+
+success_criteria: []
+failure_criteria: []
+
+implementation_paths: []
+
+revision:
+  parent_id: ""
+  reason: ""
