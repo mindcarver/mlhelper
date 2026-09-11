@@ -1,7 +1,7 @@
 ---
 name: mlh-freeze
 description: >-
-  Use when explicitly asked to lock an MLH research stage with a precise Git commit and annotated tag before exposing later evidence or advancing the study.
+  Use when a requested or previously authorized MLH stage freeze needs an exact Git commit and annotated tag before routine progression or later evidence exposure.
 metadata:
   category: discipline
   triggers: freeze research stage, lock experiment, git evidence tag, MLH checkpoint, advance stage
@@ -13,19 +13,17 @@ Freezing preserves evidence; it does not certify correctness.
 
 ## Preconditions
 
-1. The user explicitly requested a freeze or stage advance.
-2. `mlh-status` shows all prior stages complete.
-3. The current stage satisfies `../mlh/references/artifact-contract.md`.
-4. Data, develop, test, impact, and holdout have a substantive adversarial review before freezing. Test and later stages also require a recorded researcher decision.
-5. The repository and exact commit scope are known.
+1. The user requested a freeze/stage advance, or a recorded prior authorization explicitly covers routine freezes within this route. Do not ask twice for the same authorized action.
+2. [Status](../mlh-status/SKILL.md) verifies applicable prerequisites using [research-contract.md](../mlh/references/research-contract.md) and [artifact-contract.md](../mlh/references/artifact-contract.md).
+3. The current stage is substantive; required checkpoint reviews and actual decisions are present. Formal data/develop need review before outer exposure, outer evidence before confirmatory conclusion, and final evidence/monitoring before deployment advancement. Reviews may be combined; not every intermediate freeze needs a new signature.
+4. Repository, exact commit scope, exposure ancestry, and procedure identity are known.
 
-## Safe workflow
+## Workflow
 
-1. Inspect `git status`, existing tags, artifact identities, and all declared `implementation_paths`.
-2. Preserve unrelated user changes. Never use broad staging such as `git add .` when unrelated paths exist.
-3. Stage only the study artifacts and implementation paths required to reproduce this boundary.
-4. Review the cached diff and run `git diff --cached --check`. Stop if secrets, large generated data, placeholders, or unrelated changes are included.
-5. Commit with `mlh(<stage>): <study-id>` and create annotated tag `mlh-<stage>-<study-id>` pointing to that commit.
-6. Verify the tag annotation and committed file list, then report the commit and tag.
+1. Inspect Git status, existing tags, evidence and declared `implementation_paths`; preserve unrelated work.
+2. Stage only the exact study artifacts and reproduction paths. Include `exposure.yaml` and immutable ancestor references, not secrets or blindly copied datasets.
+3. Inspect the cached diff and run `git diff --cached --check`; reject placeholders and unrelated files.
+4. Commit with `mlh(<stage>): <study-id>` and create annotated tag `mlh-<stage>-<study-id>` pointing to that exact commit.
+5. Verify annotation, commit contents and required identities, then report both.
 
-Stage order is `frame -> data -> develop -> test -> impact -> holdout -> conclude`. A not-applicable impact still needs an explicit report and boundary. Never delete or move an existing evidence tag to hide a later correction; create a new study revision.
+Follow the level-dependent route. A formal not-applicable impact needs a report and boundary; a predeclared optional holdout needs no empty freeze. A pilot snapshot is permitted but is not formal validation. Never delete or move an existing evidence tag to hide corrections. New revisions preserve ancestor exposure; frozen rolling rules permit subsequent scheduled fits without retagging the procedure after each fit.

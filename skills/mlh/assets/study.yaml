@@ -1,9 +1,9 @@
-schema_version: 1
+schema_version: 2
 
 id: ""
 title: ""
 status: draft                 # draft | active | stopped | concluded
-route: predictive             # predictive is the core MLH route
+route: predictive
 task_type: ""                 # classification | regression | ranking | forecasting
 
 question: ""
@@ -11,6 +11,19 @@ decision_context: ""
 hypothesis: ""
 counter_hypothesis: ""
 kill_criteria: []
+
+validation:
+  level: ""                   # exploratory | confirmatory | deployment; no silent default
+  rationale: ""
+  final_evidence: ""           # none | holdout | prospective
+  final_protocol_ref: ""      # immutable plan; prospective plan precedes outcome accrual
+
+exploration:
+  development_dataset_ids: []
+  provisional_target: ""
+  unresolved_assumptions: []
+  budget: ""                  # bounded pilot time/trials
+  log_ref: ""                 # include influential pilot attempts in selection history
 
 scope:
   population: ""
@@ -21,6 +34,7 @@ scope:
 target:
   name: ""
   definition: ""
+  prediction_time: ""
   observed_at: ""
   horizon: ""
   availability_lag: ""
@@ -33,6 +47,8 @@ split:
   test: ""
   impact: ""
   holdout: ""
+  test_impact_relationship: "" # shared | distinct | not_applicable; record dependencies
+  allowed_structural_disclosures: []
 
 metrics:
   primary: ""
@@ -44,24 +60,65 @@ baselines:
   naive: []
   simple: []
   incumbent: []
+  decision_policy: []
 
 search:
   allowed_model_families: []
-  max_trials: 0
+  max_trials: 0              # positive for active search
   seed_policy: ""
   selection_rule: ""
+  pilot_attempts_ref: ""
+  ancestor_attempts_ref: ""   # immutable references; new budget does not erase history
+
+procedure:
+  mode: ""                   # fixed | rolling
+  recipe_ref: ""             # develop/recipe.yaml; see assets/recipe.yaml
+  training_window: ""
+  retraining_schedule: ""
+  label_maturity_rule: ""
+  past_evaluation_data_rule: "" # explicitly forbid or define eligible matured observations
+  feature_parameter_update_rule: ""
+  per_update_search_budget: ""
+  calibration_policy_update_rule: ""
+  execution_lag: ""
+  unavailable_data_fallback: ""
+  step_log_ref: ""
 
 impact:
   required: false
+  not_applicable_reason: ""
   method: ""
   prediction_to_decision_policy: ""
+  cost_model_ref: ""
+  sensitivity_ranges: ""
   constraints: []
+
+evidence:
+  exposure_ledger: exposure.yaml
+  artifact_paths: {}          # explicit mapping for combined pilot artifacts
+  immutable_boundaries: {}    # stage -> exact commit/tag or immutable manifest
+
+governance:
+  review_checkpoints: []      # formal: pre-outer data/develop, pre-conclusion outer evidence
+  decision_checkpoints: []    # goal/protocol, revision, final opening, conclusion/next step
+  authorization_ref: ""       # actual researcher instruction, never generated approval
+  authorized_scope: ""
+  stop_conditions: []
+
+monitoring:                   # substantive for deployment advancement
+  owner: ""
+  cadence: ""
+  checks: []                 # data, predictive quality, decision costs/impact
+  delayed_label_handling: ""
+  stop_rollback_criteria: []
+  action_authority: ""
 
 success_criteria: []
 failure_criteria: []
-
 implementation_paths: []
 
 revision:
   parent_id: ""
   reason: ""
+  inherited_exposure_refs: [] # immutable ancestor ledgers/events, not just mutable paths
+  migration_record_ref: ""    # preserve version 1 originals; unknown history stays unknown

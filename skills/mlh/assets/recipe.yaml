@@ -1,0 +1,36 @@
+schema_version: 1
+study_id: ""
+mode: ""                     # fixed | rolling
+data_snapshot_refs: []
+split_manifest_ref: ""
+feature_definitions_ref: ""
+feature_availability_rule: ""
+fold_fitted_preprocessing: ""
+model_family: ""
+hyperparameters: {}
+seed_policy: ""
+calibration_rule: ""
+decision_policy: ""
+cost_model_ref: ""
+dependency_lock_ref: ""
+code_revision: ""
+
+fixed:
+  fitted_artifact_ref: ""
+  training_membership_ref: ""
+
+rolling:
+  training_window: ""
+  retraining_schedule: ""
+  label_maturity_rule: ""
+  past_evaluation_data_rule: ""
+  feature_parameter_update_rule: ""
+  per_update_search_budget: ""
+  calibration_policy_update_rule: ""
+  execution_lag: ""
+  unavailable_data_fallback: ""
+  step_log_ref: ""            # cutoff, labels available at fit, fitted hash, prediction/action time
+
+# Mark irrelevant sections not_applicable with a reason in the study mapping.
+# Rules match study.yaml; frozen identity covers code, evaluation and policy rules.
+# Generated weights/predictions are logged per step rather than guessed at freeze time.

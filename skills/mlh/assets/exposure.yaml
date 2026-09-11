@@ -1,0 +1,36 @@
+schema_version: 1             # ledger format; independent of study schema version
+study_id: ""
+history_status: unknown       # unknown | reconstructed; empty events are not proof
+history_evidence_refs: []      # actual access controls, custodian records, ancestor ledgers
+inherited_sources: []         # each: study_id, immutable_ref, covered_event_ids
+
+datasets: []
+# Each dataset entry:
+# - id: development-v1
+#   immutable_ref: "versioned URI plus hash or exact snapshot identity"
+#   membership_ref: "immutable membership or deterministic time/group rule"
+#   role: development         # development | test | impact | final
+#   overlaps_dataset_ids: []   # include renamed/re-exported and ancestor observations
+#   access_control_ref: "actual control or custodian evidence; not merely this declaration"
+#   custodian: "responsible person or isolated process"
+#   allowed_disclosures: []    # fixed before audit; no target summaries for sealed roles
+#   eligibility: development_only # unverified | development_only | untouched | exposed_evaluation
+#   eligibility_reason: "claim-relative assessment including ancestor exposure"
+
+events: []
+# Each event (append; preserve inherited ids and immutable origin):
+# - id: event-001
+#   dataset_id: development-v1
+#   occurred_at: "ISO 8601 time with offset"
+#   actor: "person/process receiving information"
+#   selector_access: true
+#   kind: outcome             # outcome | structural_disclosure
+#   disclosed: "labels / summary / predictions / fixed schema or coarse integrity result"
+#   purpose: "exploration / evaluation / sealed integrity audit"
+#   source_ref: "immutable log/report"
+#   inherited_from: ""         # ancestor study id, if applicable
+
+# A structural disclosure event does not itself expose outcomes when it follows the
+# fixed approved policy. Repeated adaptive queries are not a loophole.
+# Exposed evaluation may support the original locked claim; after redesign it is
+# development/diagnostic evidence, never a fresh independent estimate.

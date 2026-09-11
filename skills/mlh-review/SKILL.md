@@ -9,23 +9,21 @@ metadata:
 
 # Adversarial research review
 
-Try to invalidate the claim with the existing evidence before proposing more experiments.
+Try to invalidate the claim using existing evidence before asking for more experiments.
 
-## Review procedure
+1. Identify stage, validation level, original plan, claimed conclusion, immutable identities, and selector access history.
+2. Read [research-contract.md](../mlh/references/research-contract.md) and [artifact-contract.md](../mlh/references/artifact-contract.md). Review requirements depend on level; one substantive review may cover multiple stages if each identity and finding is explicit.
+3. Separate blocking integrity failures from uncertainty, practical limits, and optional improvements.
+4. Challenge the applicable categories:
+   - target/availability ambiguity, entity or temporal overlap, preprocessing and target-proxy leakage;
+   - ancestor exposure, renamed/overlapping datasets, missing access history, and sealed-audit disclosure;
+   - weak baselines, cumulative search multiplicity, manual variants, seeds, and selective reporting;
+   - prediction and policy selection outside inner validation;
+   - rolling cutoffs, mature labels, update budgets, fallbacks, and drift from frozen rules;
+   - shared test/impact evidence incorrectly counted as independent replication;
+   - calibration, subgroup failure, shift, concentration, uncertainty, negative controls;
+   - costs, capacity, harms, feedback, simulation realism, final evidence and monitoring when required.
+5. For each finding cite evidence or its absence, explain its effect on the claim, and name the earliest valid repair. A revision does not restore exposed data.
+6. Check researcher decisions and authorization against actual records, not generated placeholders.
 
-1. Identify the exact stage, claimed conclusion, frozen identities, and evidence that was available when choices were made.
-2. Read the relevant completion contract in `../mlh/references/artifact-contract.md` and the exposure rules in `../mlh/references/research-contract.md`.
-3. Separate blocking integrity failures from statistical uncertainty, practical limitations, and optional improvements.
-4. Challenge at least the applicable categories:
-   - target ambiguity and timestamp leakage;
-   - split mismatch, group overlap, label overlap, and preprocessing leakage;
-   - baseline weakness, search multiplicity, seed sensitivity, and selective reporting;
-   - recipe identity drift between develop and later stages;
-   - calibration, subgroup failure, distribution shift, concentration, and uncertainty;
-   - simpler explanations, negative controls, and mechanism proxies;
-   - decision costs, capacity, harms, feedback, and unrealistic simulation assumptions.
-5. For each finding, cite the artifact or missing evidence, explain impact on the claim, and propose the earliest valid repair stage.
-
-## Output
-
-Use severity `blocking`, `warning`, or `info`. End with open questions and the exact decisions required from the researcher. Do not fill `Researcher Decision` on the researcher's behalf and do not turn a review into a same-revision tuning session.
+Use `blocking`, `warning`, or `info`. Link reviewed commit/manifest identities and unresolved findings. Do not enter a researcher's decision or turn review into same-revision tuning. A bounded exploratory conclusion need not pass deployment gates; a deployment claim may not silently downgrade its planned requirements.
