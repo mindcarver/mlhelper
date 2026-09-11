@@ -9,27 +9,25 @@ metadata:
 
 # Validate downstream impact
 
-Prediction quality and decision value are separate claims.
+Predictive quality and decision value are distinct claims; both can be evaluated on shared evidence.
 
 ## Gate
 
-The test stage must be closed and frozen or otherwise immutably identified. The prediction-to-decision policy, constraints, cost model, impact metrics, and sensitivity ranges must be declared before impact outcomes are viewed. If test evidence was used to design them, create a new revision rather than treating impact as independent evidence.
+Read [research-contract.md](../mlh/references/research-contract.md). Formal test is closed and immutable. Policy, cost model, constraints, metrics, and sensitivity ranges were developed inside training validation and locked before test exposure. If test influenced redesign, create a linked revision with inherited exposure; do not relabel reused outcomes as independent evidence.
 
-## Route by decision
-
-- Trading or allocation: positions, latency, turnover, fees, slippage, capacity, exposure, drawdown, concentration.
-- Classification intervention: threshold, action cost, false-positive/negative harm, capacity, fairness, deferral, calibration.
-- Ranking or recommendation: cutoff, exposure policy, utility, diversity, feedback effects, coverage.
-- Forecast-driven planning: decision rule, asymmetric cost, resource constraints, scenario sensitivity.
-- No downstream action: write `not_applicable`, explain why, and limit the conclusion to predictive performance.
+Exploratory policy experiments belong in develop. No downstream action permits an explicit `not_applicable` report with a reason; no financial metric needs to be invented.
 
 ## Workflow
 
-1. Verify the locked recipe and policy identities.
-2. Simulate only information and actions available at decision time.
-3. Report gross model performance separately from costs, risks, harms, and net impact.
-4. Stress predeclared assumptions and show which ones dominate the conclusion.
-5. Check concentration by entity, period, group, and extreme event.
-6. Write `impact/impact-report.md`; record both supporting and counter-evidence.
+1. Verify frozen procedure, policy, data, and prediction identities. Declare whether samples/predictions are shared with test. Shared evidence supports different endpoints, not independent replication; separate datasets also need dependence checks.
+2. Simulate only information and actions available at each decision time. Preserve the rolling execution provenance if applicable.
+3. Apply the domain-relevant constraints:
+   - trading/allocation: latency, turnover, fees, slippage, capacity, exposure, drawdown, concentration;
+   - intervention: action cost, asymmetric harm, capacity, fairness, deferral, calibration;
+   - ranking: cutoff, exposure, utility, diversity, feedback, coverage;
+   - planning: asymmetric cost, resource constraints, scenario sensitivity.
+4. Separate prediction metrics from costs, risks, harms, and net consequences; stress only predeclared assumptions for confirmatory claims.
+5. Check concentration across entities, time, groups, and extreme events. Label additional diagnostics post hoc.
+6. Write [impact artifacts](../mlh/references/artifact-contract.md), supporting/counter-evidence and actual decisions under the declared authorization.
 
-Do not tune the model or decision policy on impact outcomes. A better threshold discovered here is a hypothesis for a new revision.
+Do not tune the model, threshold, policy, cost model, or excluded samples on impact outcomes. A promising modification is a revision hypothesis with the same inherited exposure history.

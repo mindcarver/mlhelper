@@ -9,20 +9,19 @@ metadata:
 
 # Conclude from the evidence
 
-A conclusion states what the evidence supports, not what the researcher hoped to prove.
+State what the evidence supports and which planned requirements remain unmet.
 
-## Workflow
+1. Use [status](../mlh-status/SKILL.md) read-only. Apply [research-contract.md](../mlh/references/research-contract.md) and [artifact-contract.md](../mlh/references/artifact-contract.md).
+2. Reconstruct the original question, validation level, final-evidence plan, hypothesis/counter-hypothesis, criteria and budget without rewriting them to fit results.
+3. Map claims to predictive quality, decision value, uncertainty, baseline increments, stability, counter-evidence and reviews. Count shared test/impact outcomes once as evidence, not two independent replications.
+4. Separate observations, statistical inferences, mechanism speculation and operational assumptions. State boundaries by population, time, regime, label availability, and fixed/rolling procedure.
+5. State achieved support: exploratory, test-supported, impact-supported, or final-evidence-supported. Confirmatory can conclude without extra holdout when the original plan specified none. Missing required final evidence prevents claiming completion/advancement at deployment level. Early stop or inconclusive conclusions remain valid and list incomplete stages.
+6. Record one actual researcher-approved decision:
+   - `stop`: negative, invalid, or not worth continuing;
+   - `revise`: linked new design with inherited exposures and a valid new-evidence plan;
+   - `monitor`: prospective observation needed; record the proposed plan without starting an automation;
+   - `advance`: evidence supports an explicitly named next step, not blanket deployment permission.
+7. For deployment advancement verify final review and a monitoring plan covering owner, cadence, delayed labels, data/performance/cost checks, stop/rollback criteria, and authority.
+8. Update the Conclusion in `RESEARCH.md` only when asked to record a supplied/authorized decision. Never invent the researcher's judgment.
 
-1. Verify stage and exposure status with `mlh-status`. State whether the conclusion is development-only, test-supported, impact-supported, or holdout-supported.
-2. Reconstruct the original question, hypothesis, counter-hypothesis, success/failure criteria, and kill criteria without rewriting them to fit results.
-3. Build a claim-evidence map covering predictive performance, uncertainty, baseline increment, stability, downstream impact, counter-evidence, and review findings.
-4. Distinguish direct observations, statistical inferences, mechanism speculation, and operational assumptions.
-5. State generalization boundaries by population, time, region, regime, label definition, decision policy, and data availability.
-6. Record one researcher-approved decision:
-   - `stop`: evidence is negative, invalid, or not worth continuing;
-   - `revise`: a new hypothesis or material design change deserves a linked revision;
-   - `monitor`: evidence is promising but prospective evidence is needed;
-   - `advance`: evidence supports the explicitly named next validation or deployment step.
-7. Update the Conclusion section of `RESEARCH.md` only when asked to record the decision.
-
-If holdout is absent, do not call the conclusion final. If causal evidence is absent, do not claim mechanism or intervention causality. Preserve negative and inconclusive studies.
+Preserve negative and inconclusive studies. No causal claim follows solely from predictive performance or feature importance. New ids, schema migrations, or level downgrades do not erase exposed data or failed requirements.

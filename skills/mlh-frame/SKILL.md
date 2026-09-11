@@ -1,7 +1,7 @@
 ---
 name: mlh-frame
 description: >-
-  Use when a predictive ML idea needs a study question, target, decision context, falsification criteria, metrics, search budget, or a new revision before data or model development.
+  Use when a predictive ML idea needs bounded development-data feasibility, a formal protocol, validation level, or a revision with inherited evidence exposure.
 metadata:
   category: technique
   triggers: frame ML study, research question, prediction target, success criteria, new ML experiment
@@ -9,25 +9,19 @@ metadata:
 
 # Frame an ML study
 
-Create a falsifiable research protocol before evidence can influence design.
+Create a useful provisional question, then a falsifiable formal protocol.
 
 ## Workflow
 
-1. Locate the intended project root and check for an existing `studies/<id>`. Discussion-only requests do not authorize file creation.
-2. State the claim class. MLH directly supports predictive classification, regression, ranking, and forecasting. Do not turn predictive association into a causal claim.
-3. Define the real decision, unit of observation, prediction timestamp, target interval, horizon, availability lag, population, and exclusions.
-4. Write one hypothesis and the strongest counter-hypothesis. Add observable kill criteria.
-5. Select a split family appropriate to deployment. Read `../mlh/references/split-protocols.md` when the dependency structure is not trivial.
-6. Predeclare the primary metric, uncertainty method, guardrails, baselines, allowed model families, maximum trials, selection rule, and downstream impact protocol.
-7. Define success and failure without consulting test or holdout evidence.
-8. For a new study, instantiate `study.yaml` and `RESEARCH.md` from `../mlh/assets/`. For a post-exposure redesign, create a new id and populate `revision.parent_id` and `revision.reason`.
+1. Locate the intended study root. Discussion alone does not authorize file creation. Read [research-contract.md](../mlh/references/research-contract.md) and check known ancestor/data exposure before choosing evidence.
+2. Establish the predictive task and intended decision, population, observation unit, prediction timestamp, provisional target/horizon, and unknowns. Do not invent an unconfirmed target silently.
+3. If feasibility is requested, designate development-only data and a small time/trial budget. Inspect availability, provisional labels, sample sufficiency, and a cheap baseline through data/develop as needed. Record influential attempts and assumptions in `RESEARCH.md` and `exposure.yaml`; complete formal framing is not a prerequisite for this pilot.
+4. For formal research choose `validation.level`, justify `validation.final_evidence`, and define hypothesis, counter-hypothesis, kill criteria, metrics/uncertainty, baselines, split family, search limits, selection rules, and impact protocol. Consult [split-protocols.md](../mlh/references/split-protocols.md) for dependencies.
+5. Declare the complete fixed or rolling learning/decision procedure, including how policy selection will occur inside development; no need to know future fitted weights at framing.
+6. Record review checkpoints and actual researcher authorization scope. Freeze substantive frame and data before formal development. Do not use test/holdout outcomes to set the protocol.
+7. On an authorized new study, instantiate [study.yaml](../mlh/assets/study.yaml), [RESEARCH.md](../mlh/assets/RESEARCH.md), and [exposure.yaml](../mlh/assets/exposure.yaml). For revisions set a new id, parent and reason, and inherit ancestor exposure and cumulative attempts with immutable references. Missing history is unverified, never untouched.
+8. Apply [artifact-contract.md](../mlh/references/artifact-contract.md) for version 1 migration; do not rewrite frozen history or silently relax requirements.
 
 ## Quality checks
 
-- The question names what is predicted, for whom, when, and for what decision.
-- Target data is actually observable after the prediction timestamp.
-- Metrics reflect the claim and deployment costs, not convenience.
-- `max_trials: 0` is not accepted for an active search.
-- Empty placeholders do not count as framing.
-
-End with unresolved assumptions and the smallest next action. Do not start data analysis unless the user requested it.
+Formal questions name what is predicted, for whom, when, and for which decision. Active search needs a positive budget; placeholders do not count as a protocol. Development exploration can inform the protocol but cannot later become independent evidence. End with unresolved assumptions and the smallest next action within the request.

@@ -9,25 +9,17 @@ metadata:
 
 # Establish trustworthy data
 
-Data is complete only when another researcher can reconstruct who was eligible, what was knowable, and which split each sample belongs to.
+Reconstruct what was knowable at prediction time, who was eligible, and the real access history.
 
-## Preconditions
+## Gate and workflow
 
-- The frame is substantive and frozen or otherwise immutably identified before label distributions or model-relevant evidence are inspected.
-- Later-stage outcomes have not been inspected to choose data rules.
-- The study route is predictive or has a separate approved protocol.
+1. Read [research-contract.md](../mlh/references/research-contract.md). A provisional frame plus designated development data is sufficient for requested feasibility exploration. Formal data audit uses the substantive frame; frame/data are locked before formal model selection.
+2. Trace source, versions, license/access, joins, revisions, and snapshot identity. Define entity, event/prediction time, label start/end, availability lag, and independent sampling unit.
+3. Reconstruct `exposure.yaml`, including inherited history and overlapping/re-exported data. Separate actual access controls from declared roles. Unknown access blocks independent claims.
+4. Audit development labels, duplicates, missingness, selection/survivorship bias, future fields, target proxies, overlap, and preprocessing leakage.
+5. For test/final evidence release only predeclared structural information. Fixed membership rules/time ranges and hashes may be known; labels, target distributions, predictions, and outcomes remain sealed. Use development estimates for adequacy, or fixed isolated checks with approved coarse pass/block disclosure. Log each disclosure; do not probe outcome distributions with adaptive checks.
+6. If isolation is unavailable, defer sealed outcome checks until authorized evaluation. Do not inspect them simply to finish an audit checklist. If outcomes were disclosed, record exposure; renaming data or creating a revision does not undo it.
+7. Choose reproducible splits using [split-protocols.md](../mlh/references/split-protocols.md). Declare test/impact shared membership/predictions, dependencies, label availability, grouping, gap/purge, and the full rolling schedule where applicable.
+8. Produce [data artifacts](../mlh/references/artifact-contract.md), record deferred sealed checks and decisions, and immutably identify formal data rules.
 
-## Workflow
-
-1. Trace each source from acquisition through joins and snapshot identity. Record versions, access constraints, revisions, and point-in-time semantics.
-2. Define entity id, event time, prediction time, label start/end, target availability, and independent sampling unit.
-3. Audit duplicates, correlated copies, entity overlap, future-derived fields, survivorship, selection bias, missingness, target proxies, and preprocessing fitted outside training folds.
-4. Choose deterministic split membership or rules using `../mlh/references/split-protocols.md`. Add grouping, gap, embargo, purge, or spatial blocks when dependencies require them.
-5. Quantify samples, target distribution, coverage, and uncertainty for every outer split without using outcome performance to move boundaries.
-6. Produce the data-stage artifacts from `../mlh/references/artifact-contract.md` and append decisions to `RESEARCH.md`.
-
-## Stop conditions
-
-Stop when target timestamps are ambiguous, split identity is not reproducible, leakage cannot be excluded, or sample adequacy makes the planned estimate meaningless. Do not patch these issues after seeing test evidence; create a revision.
-
-Never fit imputation, scaling, feature selection, resampling, calibration, or learned representations on all splits. Calling a transformation "unsupervised" does not exempt it.
+Stop for ambiguous target timestamps, unreproducible membership, unresolved leakage, or evidence too weak for the planned claim. Pilot uncertainty may be documented for feasibility; it is not a license for a confirmatory claim. Fit learned transformations only on eligible training folds.

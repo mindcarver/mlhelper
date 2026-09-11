@@ -1,48 +1,75 @@
 # mlhelper
 
-`mlhelper` 是一组以研究纪律为核心的 Codex skills，用来辅助预测型机器学习研究。它不绑定训练框架，也不替研究者追逐最高分；它负责把问题定义、数据审计、训练集内开发、一次性测试、决策影响验证、最终留存评估和结论沉淀组织成可复核的证据链。
+`mlhelper` 是一组辅助预测型机器学习研究的 Codex skills。它将问题、数据、模型与决策规则、外部评估和结论组织成可复核的证据链，适用于分类、回归、排序和预测。它不绑定训练框架，也不提供自动训练或交易执行程序。
+
+## 研究路径
+
+```text
+初步问题 ↔ 开发数据上的可行性探索
+                 ↓
+正式协议与数据审计 → 冻结
+                 ↓
+训练内部开发：基线 → 特征 / 模型 / 决策规则 → 内部验证 → 选择
+                 ↓
+冻结完整学习与决策流程
+                 ↓
+test 预测评估 → impact 决策价值评估
+                 ↓
+按计划进行最终留存或前瞻验证 → 结论
+```
+
+探索可以在完整正式协议之前进行，但必须限定开发数据、预算和暂定假设。探索使用过的数据不能再作为独立验证。研究也可以根据负面或不足的证据提前停止，不必为了凑齐阶段而生成空报告。
+
+| 验证目标 | 必需证据 | 结论边界 |
+|---|---|---|
+| `exploratory` 可行性探索 | 初步问题、开发数据、尝试记录和探索结果 | 仅支持可行性与方案选择 |
+| `confirmatory` 正式研究 | 冻结协议与方案、独立测试、impact 报告和实质评审 | 支持预先声明的研究结论；额外 holdout 按原计划选择 |
+| `deployment` 实际使用前验证 | 正式研究，加最终 holdout 或预先约定的前瞻验证、监测与退出计划 | 支持明确的下一使用步骤，不自动授权部署或交易 |
+
+没有下游行动时，正式 impact 报告可记录 `not_applicable` 和理由。预先要求的最终验证不能因为结果不好而删掉；提前结论需列出未满足的要求。
+
+## 核心边界
+
+- 预处理、特征、参数、校准、阈值和决策规则在训练内部选择。策略价值可以参与内部开发，外部 impact 验证冻结后的规则。
+- test 与 impact 可以使用同一批样本和预测；必须记录共享关系，不能宣称两次独立验证。
+- 新 revision 继承祖先和其他已知的数据暴露历史。换编号、路径或数据名称不能让看过的结果重新独立。
+- 封存数据审计只披露预先允许的结构信息；知道固定时间范围不等于看过标签。目标分布和表现需要隔离检查或延后检查。
+- 可以冻结固定模型，也可以冻结滚动学习流程。滚动重训必须按事先确定的窗口、标签成熟时间、更新规则和异常处理执行。
+- 人工决策集中在目标、重大修订、最终证据开放和结论等节点。已有明确授权覆盖的常规推进不重复签字。
+- 访问声明不是权限隔离；Git 冻结保存证据，但不能证明方法本身正确。
 
 ## Skills
 
 | Skill | 作用 |
 |---|---|
-| `mlh` | 总控路由与不可破坏的研究纪律 |
-| `mlh-frame` | 建立研究问题、目标、证伪条件与评估协议 |
-| `mlh-data` | 审计标签、时间语义、数据来源和切分 |
-| `mlh-develop` | 在训练集内部完成基线、特征、模型选择与消融 |
-| `mlh-test` | 对冻结方案进行一次性独立测试 |
-| `mlh-impact` | 验证模型转化为决策后的成本与影响 |
-| `mlh-holdout` | 使用从未触碰的数据完成最终评估 |
-| `mlh-review` | 对任意阶段做独立对抗评审 |
-| `mlh-status` | 只读核查研究状态和下一阻塞点 |
-| `mlh-freeze` | 用精确 Git 提交与 annotated tag 固化证据 |
-| `mlh-conclude` | 综合证据、边界和反例，形成研究结论 |
+| `mlh` | 总控路由、验证目标与研究纪律 |
+| `mlh-frame` | 初步问题、可行性探索、正式协议和修订 |
+| `mlh-data` | 标签、可用时间、来源、切分和封存审计 |
+| `mlh-develop` | 基线、模型与决策规则联合开发、滚动流程 |
+| `mlh-test` | 对冻结流程进行独立预测评估 |
+| `mlh-impact` | 验证决策成本与价值，标识共享证据 |
+| `mlh-holdout` | 最终留存或前瞻验证 |
+| `mlh-review` | 对抗评审，可一次覆盖多个明确阶段 |
+| `mlh-status` | 只读核查实际证据与最早阻塞点 |
+| `mlh-freeze` | 精确 Git 提交与 annotated tag |
+| `mlh-conclude` | 结论、提前停止、修订或明确下一步 |
 
-## Pipeline
-
-```text
-frame -> data -> develop -> test -> impact -> holdout -> conclude
-                      |
-                      +-- inner validation, tuning and ablation stay here
-```
-
-`impact` 在量化研究中可以是成本后回测，在其他领域可以是策略模拟、离线策略评估或业务成本收益分析。没有下游决策时允许明确记录 `not_applicable`，但不能把测试分数冒充现实影响。
-
-## Design boundaries
-
-- 第一版只包含 Markdown skills、参考契约和模板，没有项目脚本。
-- 核心路线适用于分类、回归、排序和预测。因果推断、强化学习和纯探索性聚类需要单独的方法协议，不能直接套用预测评估结论。
-- Skill 可以检查证据并提出异议，但最终研究决策由研究者记录。
-- 所有 test、impact 和 holdout 之后的方案变化都必须进入新的 revision，不能改写原证据。
-
-## Suggested invocation
+## 使用示例
 
 ```text
-$mlh-frame 为“客户流失预测”建立一项新研究
-$mlh-status 检查当前研究下一步
-$mlh-develop 设计训练集内部的验证与搜索计划
-$mlh-review 对 develop 阶段做对抗评审
+$mlh-frame 先用开发数据探索客户流失预测是否可行，预算为两个简单基线
+$mlh-frame 将探索结果整理成 confirmatory 研究，预先确定最终证据要求
+$mlh-develop 联合验证预测模型与决策阈值，全部选择限制在训练内部
+$mlh-develop 定义每月滚动重训流程，只使用当时已成熟的标签
+$mlh-status 检查当前研究的数据暴露历史和下一步
+$mlh-review 对数据和开发阶段做一次联合评审
 $mlh-freeze 冻结 develop，准备进入 test
 ```
 
-每个 skill 都位于 `skills/<skill-name>/SKILL.md`。研究工作区模板位于 `skills/mlh/assets/`，完整产物契约位于 `skills/mlh/references/`。
+## 文件与兼容
+
+每个技能位于 `skills/<skill-name>/SKILL.md`。统一规则见 [研究契约](skills/mlh/references/research-contract.md)、[产物契约](skills/mlh/references/artifact-contract.md) 和 [切分协议](skills/mlh/references/split-protocols.md)。
+
+[研究配置](skills/mlh/assets/study.yaml) 使用 schema version 2；另有 [研究记录](skills/mlh/assets/RESEARCH.md)、[暴露账本](skills/mlh/assets/exposure.yaml) 和 [流程配方](skills/mlh/assets/recipe.yaml) 模板。旧 version 1 研究保留原要求，缺失历史标记为未核实；授权后依据真实证据映射，不能通过升级格式自动获得独立性或降低验证要求。
+
+项目保留 11 个技能，没有项目脚本、自动权限隔离器或自动验证器。[行为场景](tests/scenarios.md) 用于实际 Agent 应用与人工复核，不是已经运行的自动测试套件。因果推断、强化学习和纯探索性聚类需要另外的方法协议。

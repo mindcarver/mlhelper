@@ -9,26 +9,23 @@ metadata:
 
 # Develop inside the training boundary
 
-All choices that can improve the selected recipe belong here and nowhere later.
+Select the learning procedure and its decision rules using development evidence only.
 
-## Preconditions
+## Gate
 
-- Frame and data artifacts are substantive, reviewed where required, and frozen or otherwise immutably identified.
-- Inner folds reproduce the intended deployment boundary.
-- Test, impact, and holdout labels or aggregate outcomes remain unexposed.
+Read [research-contract.md](../mlh/references/research-contract.md) and [artifact-contract.md](../mlh/references/artifact-contract.md). Formal development requires substantive immutable frame/data. A requested bounded exploratory pilot needs a provisional frame, development identity, and budget; label its result exploratory.
+
+Outer evidence designated for a fresh independent claim must not have influenced this or any ancestor's selection. Inherited exposed data may be explicitly reassigned to development/diagnosis, never restored as independent evidence.
 
 ## Workflow
 
-1. Run applicable naive, simple, and incumbent baselines before complex models.
-2. Express preprocessing and learned feature steps as part of the fold-fitted recipe. Fit them separately inside each training fold.
-3. Fix the allowed model families, search space, trial budget, seed policy, primary selection rule, tie-breakers, and stopping condition before searching.
-4. Log every trial that influenced the search, including failed runs and manual variants. Record fold-level metrics, uncertainty, compute cost, rejection reason, and recipe identity.
-5. Compare stability across folds, time, groups, classes, and seeds. Perform predeclared ablations and negative controls.
-6. Select the least complex recipe adequately supported by evidence; do not select solely by the maximum mean score.
-7. Complete `baselines.csv`, `experiments.csv`, `selection.md`, and `recipe.yaml`. Record budget use and remaining risks in `RESEARCH.md`.
+1. Run applicable naive, simple, incumbent, and decision-policy baselines before complexity.
+2. Put preprocessing, feature learning/selection, resampling, calibration, and threshold/policy tuning inside training folds.
+3. Fix search families/space, trial budget, seeds, selection metric, tie-breakers, and stopping rules. Include manual policy variants, pilot attempts, and cumulative ancestor attempts in the log. An approved new budget does not erase selection history.
+4. Jointly compare prediction and intended decision value inside inner validation using declared costs and constraints. If net decision value is the primary claim, use the predeclared selection rule; do not postpone all policy design until impact.
+5. Assess fold/time/group/seed stability, uncertainty, predeclared ablations and negative controls. Do not treat the best inner score as an unbiased performance estimate.
+6. Select the least complex adequately supported procedure. Complete baselines, experiments, selection, and recipe artifacts, or mapped pilot records.
+7. Lock fixed-model identity or the full rolling algorithm: training window, schedule, mature-label rule, allowed prior evaluation data, feature/parameter selection and update budget, calibration/policy updates, seeds, lag, and failure fallback. Fix these rules before outer exposure; preserve per-step provenance during execution.
+8. Complete the pre-outer data/develop review and record remaining risks before formal test.
 
-## Iron boundary
-
-Do not read test or holdout outcomes "to sanity-check" development. If any later evidence has already influenced a choice, preserve this revision and create a new one.
-
-Development is not complete until recipe identity includes data/split versions, features, preprocessing, model, parameters, seeds, calibration or threshold logic, dependencies, and code revision.
+Reading later outcomes to choose features, thresholds, sample exclusions, cost rules, or retraining frequency requires revision and inherited exposure. Scheduled retraining under the locked algorithm is allowed; manual post-result redesign is not.
